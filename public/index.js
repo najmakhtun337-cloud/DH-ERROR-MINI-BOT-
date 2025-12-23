@@ -9,7 +9,7 @@ app.use(express.static("public"));
 
 let sock;
 
-async function startBot(){
+async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState("./session");
 
   sock = makeWASocket({
@@ -19,42 +19,27 @@ async function startBot(){
 
   sock.ev.on("creds.update", saveCreds);
 
-  sock.ev.on("connection.update", (update) => {
-    if(update.connection === "open"){
-      console.log("✅ DH ERROR WhatsApp Bot Connected");
-    }
-  });
-
-  sock.ev.on("messages.upsert", async ({ messages }) => {
-    const msg = messages[0];
-    if (!msg.message || msg.key.fromMe) return;
-
-    const text =
-      msg.message.conversation ||
-      msg.message.extendedTextMessage?.text;
-
-    if (text === "hi") {
-      await sock.sendMessage(msg.key.remoteJid, {
-        text: "👋 Hello! DH ERROR Bot Active"
-      });
+  sock.ev.on("connection.update", (u) => {
+    if (u.connection === "open") {
+      console.log("✅ DH ERROR WhatsApp Connected");
     }
   });
 }
 
 app.get("/pair", async (req, res) => {
-  const number = req.query.number;
-  if(!number) return res.send("❌ Number required");
-
-  try{
+  try {
+    const number = req.query.number;
+    if (!number) return res.send("❌ Number missing");
     const code = await sock.requestPairingCode(number);
     res.send("PAIR CODE: " + code);
-  }catch(e){
-    res.send("❌ Failed, try again");
+  } catch {
+    res.send("❌ Try again");
   }
 });
 
-startBot();
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () =>
+  console.log("🤖 DH ERROR Mini Bot running on", PORT)
+);
 
-app.listen(3000, () => {
-  console.log("🤖 DH ERROR Mini Bot running on port 3000");
-});
+startBot();
