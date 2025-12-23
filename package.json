@@ -1,6 +1,7 @@
 {
   "name": "dh-error-mini-bot",
   "version": "1.0.0",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -9,7 +10,7 @@
     "node": "20.x"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.0",
+    "@whiskeysockets/baileys": "6.7.0",
     "express": "^4.19.2"
   }
 }
