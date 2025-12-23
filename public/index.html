@@ -1,82 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>DH ERROR</title>
 <style>
 body{
   background:#000;
-  font-family:Arial;
   color:#fff;
+  font-family:Arial;
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
 }
-.card{
-  width:360px;
+.box{
+  width:350px;
   background:#0b0b0b;
   padding:25px;
-  border-radius:14px;
+  border-radius:12px;
   text-align:center;
 }
-h1{
-  letter-spacing:3px;
-  margin-bottom:6px;
-}
-p{
-  color:#aaa;
-  font-size:14px;
-}
-input{
+input,button{
   width:100%;
   padding:12px;
+  margin-top:12px;
   border:none;
   border-radius:10px;
-  margin-top:15px;
-  background:#111;
-  color:#fff;
-  font-size:15px;
 }
-button{
-  width:100%;
-  padding:12px;
-  margin-top:15px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
-  cursor:pointer;
-}
-.white{
-  background:#fff;
-  color:#000;
-}
-.dark{
-  background:#111;
-  color:#fff;
-}
-#code{
-  margin-top:15px;
-  color:#00ff88;
-  font-size:18px;
-  word-break:break-all;
-}
-.footer{
-  margin-top:18px;
-  font-size:12px;
-  color:#555;
-}
+input{background:#111;color:#fff}
+button{background:#fff;color:#000;font-size:16px}
+.dark{background:#111;color:#fff}
+#code{margin-top:12px;color:#00ff99}
 </style>
 </head>
 <body>
 
-<div class="card">
+<div class="box">
   <h1>DH ERROR</h1>
-  <p>Get Connected to DH ERROR WhatsApp Bot</p>
+  <p>WhatsApp Mini Bot</p>
 
   <input id="num" placeholder="+91XXXXXXXXXX">
-
-  <button class="white" onclick="getCode()">🔑 Get Code</button>
+  <button onclick="getCode()">🔑 Get Code</button>
 
   <div id="code"></div>
 
@@ -88,16 +52,14 @@ button{
     <button class="dark">👥 Join Group</button>
   </a>
 
-  <div class="footer">Owner • CK-ERROR</div>
+  <p style="font-size:12px;color:#555">Owner • CK-ERROR</p>
 </div>
 
 <script>
 async function getCode(){
-  const num = document.getElementById("num").value;
-  if(!num) return alert("Enter WhatsApp number");
-  const res = await fetch("/pair?number=" + num);
-  const data = await res.text();
-  document.getElementById("code").innerText = data;
+  const n = document.getElementById("num").value;
+  const r = await fetch("/pair?number=" + n);
+  document.getElementById("code").innerText = await r.text();
 }
 </script>
 
